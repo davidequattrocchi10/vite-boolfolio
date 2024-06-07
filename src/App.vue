@@ -11,9 +11,15 @@ export default{
     }
   },
   methods:{
+    goToPage(url){
+      console.log(url);
+      this.callApi(url);
+
+    },
     search(){
       const searchUrl = this.base_api_url + this.projects_endpoint + `?search=${this.search_text}`;
-      console.log(searchUrl)
+      console.log(searchUrl);
+      this.callApi(searchUrl);
 
     },
     callApi(url){
@@ -22,6 +28,7 @@ export default{
         .then(response => {
           console.log(response);
           this.projects = response.data.results;
+          console.log(this.projects );
         })
         .catch(errors => {
           console.error(errors)
@@ -60,7 +67,7 @@ export default{
   <section class="projects" v-if="projects">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        <div class="col" v-for="project in projects">
+        <div class="col" v-for="project in projects.data">
           <div class="card">
             <!-- Manage the null value inside project.cover_image in these two ways-->
             <!-- 
@@ -82,14 +89,83 @@ export default{
 
           </div>
 
-
             <div class="card-body">
               {{ project.title }}
+            </div>
+            <div class="card-footer">
+              <!-- Modal trigger button -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                :data-bs-target="`#project-${project.id}`"
+              >
+                View
+              </button>
+              
+              <!-- Modal Body -->
+              <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+              <div
+                class="modal fade"
+                :id="`project-${project.id}`"
+                tabindex="-1"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                
+                role="dialog"
+                :aria-labelledby="`modal-title-${project.id}`"
+                aria-hidden="true"
+              >
+                <div
+                  class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+                  role="document"
+                >
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" :id="`modal-title-${project.id}`">
+                        {{project.title}}
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <img class="img-fluid w-100" :src="project.cover_image.startsWith('https://') ? project.cover_image : base_api_url + '/storage/' + project.cover_image" alt="">
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <nav aria-label="Page navigation" class="mt-3">
+      <ul class="pagination">
+        <li class="page-item" :class="{'disabled' : !link.url, 'active':link.active}" v-for="link in projects.links">
+          <button class="page-link" :href="link.url" type="button" @click="goToPage(link.url)">
+            <span v-html="link.label">
+            </span>
+          </button>
+        </li>
+      </ul>
+    </nav>
     </div>
+
+    
+    
 
   </section>
 
