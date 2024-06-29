@@ -1,7 +1,25 @@
-# Vue 3 + Vite
+# Vite-Boolfolio
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Introduction
 
-## Recommended IDE Setup
+Vite-Boolfolio is a frontend project built using Vue.js and JavaScript to consume the API endpoints defined in the [Laravel Auth](https://github.com/davidequattrocchi10/laravel-auth) project. It displays all projects created by administrators in the Laravel Auth platform and allows users to search for projects by title.
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## Features
+- **Fetches projects from Laravel Auth API**: Consumes the API endpoints provided by the Laravel Auth project to retrieve and display project data.
+- **View Projects**: Display all projects created by administrators from the Laravel-Auth platform.
+- **Search Functionality**:  Implements a search functionality that allows users to filter projects by title.
+- **Responsive Design**: The application is designed to be responsive and user-friendly across different devices.
+
+## Getting Started
+
+### Prerequisites
+
+- Vue.js
+- JS
+
+### Installation
+
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/davidequattrocchi10/vite-boolfolio.git
+
